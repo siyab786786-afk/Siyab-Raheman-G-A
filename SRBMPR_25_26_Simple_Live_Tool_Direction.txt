@@ -1,0 +1,14 @@
+SRBMPR-25/26 SIMPLE LIVE BYBIT EXECUTION TOOL — DIRECTION DOC
+
+1. CORE OBJECTIVE
+Provide an ultra-clean, exact Bybit-style live chart interface with zero clutter, zero buffering, and unbuffered 3D clarity. 
+
+2. EXACT REQUIREMENTS
+- Bybit Live Chart: Use pure Bybit-style candlestick rendering without unnecessary noise or multi-color confusion.
+- Live Overlay Box: Display precisely the Next Active Setup:
+  - Entry Price
+  - Stop-Loss Price ($1.00 structural stop rule or Upper Wick unit)
+  - Target Price (1:1 / 1:2 / 1:3 sequence)
+- Active Lifecycle: Exactly one active setup at a time. Once completed or hit, it automatically hides and the next sequential setup activates.
+- Timezone: Synchronized with Bybit server time (UTC).
+- Zero Complexity: No secondary indicators, no unnecessary tables, no clutter — just Bybit native candles + SRBMPR-25/26 forward test execution box.

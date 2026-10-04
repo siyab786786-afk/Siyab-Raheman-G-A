@@ -1,0 +1,8 @@
+SRBMPR-25/26 FORWARD TEST OVERLAY — ULTRA SIMPLE DIRECTION DOC
+
+1. CORE DIRECTORY
+- Bybit Original Candles: Keep Bybit 1H/1M candles unmodified and clean.
+- Forward Test Overlay: All forward test projection lines, Entry, SL, Target, L1, L2, and L3 must be rendered in pure WHITE.
+- Support, Resistance & Supply/Demand: Include automatic lines for Next Support, Next Resistance, and Supply/Demand zones indicating target direction ("Next support test", "Next resistance reach").
+- Single Active Setup: Only one active forward-test setup at a time. Once completed, it updates to the next setup.
+- Zero Clutter: No extra indicators, no conflicting colors. Pure Bybit chart + white-line SRBMPR-25/26 forward test overlay.

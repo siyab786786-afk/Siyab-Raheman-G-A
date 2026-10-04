@@ -1,0 +1,7 @@
+{
+  "name": "0-SRBMPR / RS-Time Engine v1.1 (Upper Wick = 1 Extraction Vault)",
+  "description": "Private isolated quantitative behavioral market research terminal featuring 0-SRBMPR engine, upper-wick reference measurement (Upper Wick = 1), right-side 1:1, 1:2, 1:3 projections, and 1:333 state machine ($1 to $1,000 objective).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEO_API", "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

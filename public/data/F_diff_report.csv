@@ -1,0 +1,4 @@
+event_id,symbol,backtest_signal_time,live_signal_time,signal_time_difference,backtest_entry,live_entry_reference,actual_fill_price,entry_difference,backtest_sl,live_sl,sl_difference,backtest_target,live_target,target_difference,backtest_rr,live_rr,backtest_status,live_status,data_mode,reason_for_difference
+EVT_0001,BTCUSDT,2024-03-15 00:00:00,2024-03-15 00:00:42,42.0,68431.00,68431.00,68432.15,0.00,68430.99,68430.99,0.0,70168.82,70168.82,0.00,5.8,5.8,T1_HIT,T1_HIT,LIVE_READ_ONLY,OK
+EVT_0002,BTCUSDT,2024-04-15 00:00:00,,,73092.31,,,NaN,,,,,,,,,NOT_TOUCHED,NO_LIVE_DATA
+EVT_0003,BTCUSDT,2024-05-01 00:00:00,2024-05-01 00:00:00,0.0,69439.84,69439.84,69439.84,0.00,69439.83,69439.83,0.0,70658.90,70658.90,0.00,5.0,5.0,SL_FIRST,SL_FIRST,BACKTEST,IDENTICAL_SUSPICIOUS
