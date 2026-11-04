@@ -27,7 +27,7 @@ import { LiveCollaborationModal } from './components/LiveCollaborationModal';
 import { AutomatedPublishAuditModal } from './components/AutomatedPublishAuditModal';
 import { SrbmprDedicatedProjectionScreen } from './components/SrbmprDedicatedProjectionScreen';
 import { BtcCleanExecutionDisplay } from './components/BtcCleanExecutionDisplay';
-import { SrbmprTradingView3DChart } from './components/SrbmprTradingView3DChart';
+import { ForwardTestCandlestickWorkspace } from './components/ForwardTestCandlestickWorkspace';
 import { SrbmprStrictAccountSafeguard } from './components/SrbmprStrictAccountSafeguard';
 import { Srbmpr100CoinWorkspaceBoard } from './components/Srbmpr100CoinWorkspaceBoard';
 import { SrbmprUnifiedEventEngineWorkspace } from './components/SrbmprUnifiedEventEngineWorkspace';
@@ -563,10 +563,11 @@ export default function App() {
         {/* SRBMPR STRICT ACCOUNT SAFEGUARD */}
         <SrbmprStrictAccountSafeguard />
 
-        {/* DITTO TRADINGVIEW 3D CHART WITH VISUAL MEASUREMENT OVERLAY */}
-        <SrbmprTradingView3DChart
-          selectedAsset={selectedAsset}
-          livePrice={livePrice}
+        {/* TRUE CANDLE-BY-CANDLE FORWARD TEST — FUTURE CANDLES REMAIN ISOLATED */}
+        <ForwardTestCandlestickWorkspace
+          candles={candles}
+          symbol={selectedAsset}
+          timeframe={timeframe}
         />
 
         {/* SRBMPR FORENSIC FOUR TARGET CONTAINERS & TODAY'S 24H DAILY SUMMARY */}
