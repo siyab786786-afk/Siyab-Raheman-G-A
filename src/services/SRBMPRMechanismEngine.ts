@@ -271,12 +271,69 @@ export class SRBMPRMechanismEngine {
     else if (activeLayer === '1:2') srbmpr333State = SRBMPRMechanismEngine.STATE_B333;
     else if (activeLayer === '1:3' || activeLayer === 'COMPLETED') srbmpr333State = SRBMPRMechanismEngine.STATE_C333;
 
+    // Two-Sided Market Mechanism Status Calculation:
+    // Whenever a LONG entry is evaluated, inspect the connected SHORT-side mechanism (and vice versa).
+    let shortSideMechanismStatus: 'PENDING' | 'INCOMPLETE' | 'VERIFIED' = 'PENDING';
+    let longSideMechanismStatus: 'PENDING' | 'INCOMPLETE' | 'VERIFIED' = 'PENDING';
+    let oppositeMechanismReason = '';
+
+    if (candles.length < 15) {
+      shortSideMechanismStatus = 'INCOMPLETE';
+      longSideMechanismStatus = 'INCOMPLETE';
+      oppositeMechanismReason = 'Insufficient historical candles (< 15 bars) to verify opposite-side completion.';
+    } else {
+      const lastBar = candles[candles.length - 1];
+      const prevBar = candles[candles.length - 2];
+      const prev2Bar = candles[candles.length - 3];
+
+      // Evaluate SHORT-side mechanism (required before confirming a LONG entry):
+      // Active lower lows = INCOMPLETE; Higher low + counter-pivot break above prev high = VERIFIED; else PENDING
+      const makingLowerLows = lastBar.low < prevBar.low && prevBar.low < prev2Bar.low;
+      const stoppedLowerLowsAndBrokeUp =
+        lastBar.low >= prevBar.low && lastBar.close > prevBar.high && currentPrice >= pos1;
+
+      if (makingLowerLows) {
+        shortSideMechanismStatus = 'INCOMPLETE';
+      } else if (stoppedLowerLowsAndBrokeUp) {
+        shortSideMechanismStatus = 'VERIFIED';
+      } else {
+        shortSideMechanismStatus = 'PENDING';
+      }
+
+      // Evaluate LONG-side mechanism (required before confirming a SHORT entry):
+      // Active higher highs = INCOMPLETE; Lower high + counter-pivot break below prev low = VERIFIED; else PENDING
+      const makingHigherHighs = lastBar.high > prevBar.high && prevBar.high > prev2Bar.high;
+      const stoppedHigherHighsAndBrokeDown =
+        lastBar.high <= prevBar.high && lastBar.close < prevBar.low;
+
+      if (makingHigherHighs) {
+        longSideMechanismStatus = 'INCOMPLETE';
+      } else if (stoppedHigherHighsAndBrokeDown) {
+        longSideMechanismStatus = 'VERIFIED';
+      } else {
+        longSideMechanismStatus = 'PENDING';
+      }
+
+      oppositeMechanismReason =
+        shortSideMechanismStatus === 'VERIFIED'
+          ? 'SHORT-side descent completed (stopped lower lows & broke counter-pivot high). LONG entry unlocked.'
+          : shortSideMechanismStatus === 'INCOMPLETE'
+            ? 'SHORT-side mechanism is INCOMPLETE (still actively making lower lows). LONG entry withheld.'
+            : 'SHORT-side mechanism is PENDING final counter-pivot break & micro-zero confirmation. LONG entry waiting.';
+    }
+
     return {
       anchorTime: anchor.timestamp, anchorHigh: anchor.high, bodyTop, wRef: safeWRef, midZone: entryPrice,
       level1: pos1, level2: pos2, level3: pos3, activeLayer, progress11, progress12, progress13,
-      status: currentPrice < entryPrice ? 'WAITING_TIME_CLOSE' : 'CONFIRMED',
+      status: currentPrice < entryPrice || shortSideMechanismStatus !== 'VERIFIED' ? 'WAITING_TIME_CLOSE' : 'CONFIRMED',
       entryPrice, slPercent: 0.1, slDistance, stopLoss, toleranceStop: stopLoss, targetPrice, rrRatio,
-      scalingTargets, srbmpr333State
+      scalingTargets, srbmpr333State,
+      evaluatedDirection: 'LONG',
+      oppositeMechanismSide: 'SHORT',
+      oppositeMechanismStatus: shortSideMechanismStatus,
+      shortSideMechanismStatus,
+      longSideMechanismStatus,
+      oppositeMechanismReason
     };
   }
 

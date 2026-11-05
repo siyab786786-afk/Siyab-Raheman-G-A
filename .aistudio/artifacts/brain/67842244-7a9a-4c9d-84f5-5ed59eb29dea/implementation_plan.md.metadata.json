@@ -1,0 +1,6 @@
+{
+  "summary":  "Implementation plan for Intra-1-Minute (60x1s) Terminal 0 Micro-Zero 1:10 & 1:20 Structure Engine, Lock Account & UI Lock Inspector, 10,000-Candle State Machine with 3-Tier Timestamps, New Coin Minute-0 Tracker, and Compounding / Walk-Forward Purge Gap Analyzer integrated into the Separate 1s Micro Terminal and Full Report Modal.",
+  "updatedAt":  "2026-10-28T19:50:35.541224953Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

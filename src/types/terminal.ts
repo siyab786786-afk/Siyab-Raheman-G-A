@@ -5,7 +5,7 @@ export type Timeframe = '1m' | '5m' | '15m' | '1h' | '4h';
 export type TimezoneMode = 'UTC' | 'Asia/Dubai' | 'Asia/Kolkata';
 export type Side = 'LONG' | 'SHORT';
 export type OrderStatus = 'PENDING_LIMIT' | 'FILLED' | 'SL_HIT' | 'TARGET_HIT' | 'EXPIRED' | 'CANCELLED';
-export type ScalpingContainer = '1:5' | '1:10' | '1:15';
+export type ScalpingContainer = '1:1' | '1:2' | '1:3' | '1:4' | '1:5' | '1:10' | '1:15';
 
 export interface ScalpingTicket {
   id: string;
@@ -136,6 +136,12 @@ export interface Srbmpr2526LayerState {
     end: string;
   };
   srbmpr333State?: 'A333' | 'B333' | 'C333' | 'ZERO';
+  evaluatedDirection?: 'LONG' | 'SHORT';
+  oppositeMechanismSide?: 'SHORT' | 'LONG';
+  oppositeMechanismStatus?: 'PENDING' | 'INCOMPLETE' | 'VERIFIED';
+  shortSideMechanismStatus?: 'PENDING' | 'INCOMPLETE' | 'VERIFIED';
+  longSideMechanismStatus?: 'PENDING' | 'INCOMPLETE' | 'VERIFIED';
+  oppositeMechanismReason?: string;
 }
 
 export interface ValidationArchiveRecord {

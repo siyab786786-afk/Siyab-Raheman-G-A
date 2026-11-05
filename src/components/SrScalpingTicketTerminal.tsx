@@ -23,6 +23,8 @@ export const SrScalpingTicketTerminal: React.FC<SrScalpingTicketTerminalProps> =
   const [userBalance, setUserBalance] = useState<number>(50.00);
   const [userRisk, setUserRisk] = useState<number>(2.00);
   const [selectedContainer, setSelectedContainer] = useState<ScalpingContainer>('1:5');
+  const [strictExecutionFilterEnabled, setStrictExecutionFilterEnabled] = useState<boolean>(true);
+  const [executionNotice, setExecutionNotice] = useState<string | null>(null);
   
   // Active ticket state
   const [activeTicket, setActiveTicket] = useState<ScalpingTicket | null>(null);
@@ -34,8 +36,21 @@ export const SrScalpingTicketTerminal: React.FC<SrScalpingTicketTerminalProps> =
   const factor = 10 ** decimals;
 
   // Multiplier for target based on container
-  const containerMultiplier = selectedContainer === '1:5' ? 5 : selectedContainer === '1:10' ? 10 : 15;
-  const containerMinutes = selectedContainer === '1:5' ? 5 : selectedContainer === '1:10' ? 10 : 15;
+  const containerMultiplier = selectedContainer === '1:1' ? 1
+    : selectedContainer === '1:2' ? 2
+    : selectedContainer === '1:3' ? 3
+    : selectedContainer === '1:4' ? 4
+    : selectedContainer === '1:5' ? 5 
+    : selectedContainer === '1:10' ? 10 
+    : 15;
+
+  const containerMinutes = selectedContainer === '1:1' ? 1
+    : selectedContainer === '1:2' ? 2
+    : selectedContainer === '1:3' ? 3
+    : selectedContainer === '1:4' ? 4
+    : selectedContainer === '1:5' ? 5 
+    : selectedContainer === '1:10' ? 10 
+    : 15;
 
   // Order lock state: true whenever ticket is PENDING_LIMIT or FILLED
   const isOrderLocked = activeTicket?.status === 'PENDING_LIMIT' || activeTicket?.status === 'FILLED';
@@ -208,6 +223,13 @@ export const SrScalpingTicketTerminal: React.FC<SrScalpingTicketTerminalProps> =
   };
 
   const handleCreateTicket = () => {
+    const isBelowMinRatio = selectedContainer === '1:1' || selectedContainer === '1:2' || selectedContainer === '1:3' || selectedContainer === '1:4';
+    if (strictExecutionFilterEnabled && isBelowMinRatio) {
+      setExecutionNotice(`STRICT EXECUTION FILTER BLOCKED: Minimum 1:5 Risk-to-Reward ratio required for automated execution. Ratio ${selectedContainer} is for monitoring and research purposes only.`);
+      setTimeout(() => setExecutionNotice(null), 6000);
+      return;
+    }
+    setExecutionNotice(null);
     const now = Date.now();
     const newTicket: ScalpingTicket = {
       id: `TKT-${Math.random().toString(36).substring(4, 9).toUpperCase()}`,
@@ -279,30 +301,57 @@ export const SrScalpingTicketTerminal: React.FC<SrScalpingTicketTerminalProps> =
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Scalping Container Selector: 1:5 -> 1:10 -> 1:15 */}
-          <div className="flex items-center gap-2 bg-black/60 p-1.5 rounded-2xl border border-white/5">
-            {(['1:5', '1:10', '1:15'] as ScalpingContainer[]).map((c) => {
-              const min = c === '1:5' ? '5m' : c === '1:10' ? '10m' : '15m';
-              const isSelected = selectedContainer === c;
-              return (
-                <button
-                  key={c}
-                  disabled={isOrderLocked}
-                  onClick={() => setSelectedContainer(c)}
-                  className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-                    isSelected
-                      ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5 disabled:opacity-40'
-                  }`}
-                >
-                  <span>{c}</span>
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded ${isSelected ? 'bg-black/20 text-black' : 'bg-white/5 text-zinc-500'}`}>
-                    {min}
-                  </span>
-                </button>
-              );
-            })}
+        <div className="flex flex-wrap items-center gap-4">
+          {/* Scalping Container Selector & Strict Execution Filter */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-[10px] text-zinc-400 font-black uppercase flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                Strict Execution Filter (Min 1:5 RR)
+              </span>
+              <button
+                onClick={() => setStrictExecutionFilterEnabled(prev => !prev)}
+                className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase transition-all ${
+                  strictExecutionFilterEnabled 
+                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' 
+                    : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
+                }`}
+              >
+                {strictExecutionFilterEnabled ? 'ENFORCED (≥ 1:5)' : 'BYPASSED'}
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1.5 bg-black/60 p-1.5 rounded-2xl border border-white/5 overflow-x-auto">
+              {(['1:1', '1:2', '1:3', '1:4', '1:5', '1:10', '1:15'] as ScalpingContainer[]).map((c) => {
+                const min = c === '1:1' ? '1m' : c === '1:2' ? '2m' : c === '1:3' ? '3m' : c === '1:4' ? '4m' : c === '1:5' ? '5m' : c === '1:10' ? '10m' : '15m';
+                const isSelected = selectedContainer === c;
+                const isMonitoringOnly = (c === '1:1' || c === '1:2' || c === '1:3' || c === '1:4');
+                return (
+                  <button
+                    key={c}
+                    disabled={isOrderLocked}
+                    onClick={() => setSelectedContainer(c)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex flex-col items-center gap-0.5 ${
+                      isSelected
+                        ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]'
+                        : 'text-zinc-400 hover:text-white hover:bg-white/5 disabled:opacity-40'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1">
+                      <span>{c}</span>
+                      {isMonitoringOnly && (
+                        <span className="text-[7px] bg-cyan-500/20 text-cyan-300 px-1 rounded uppercase font-bold" title="Monitoring Only">
+                          MON
+                        </span>
+                      )}
+                    </div>
+                    <span className={`text-[8px] px-1 rounded ${isSelected ? 'bg-black/20 text-black' : 'bg-white/5 text-zinc-500'}`}>
+                      {min}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* 24H Broker Audit Certificate Button */}
@@ -327,6 +376,12 @@ export const SrScalpingTicketTerminal: React.FC<SrScalpingTicketTerminalProps> =
           
           {/* Header of Ticket */}
           <div>
+            {executionNotice && (
+              <div className="mb-6 p-4 rounded-2xl bg-rose-500/20 border border-rose-500/50 flex items-center gap-3 text-rose-300 text-xs font-mono animate-in fade-in">
+                <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0" />
+                <span>{executionNotice}</span>
+              </div>
+            )}
             <div className="flex items-center justify-between border-b border-white/5 pb-4 mb-6">
               <div className="flex items-center gap-3">
                 <span className="text-xs font-mono font-black text-zinc-400 uppercase tracking-widest">

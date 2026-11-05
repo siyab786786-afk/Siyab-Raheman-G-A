@@ -16,8 +16,8 @@ interface MultiAssetSelectorBoxProps {
   onFullSync: () => void;
 }
 
-const STANDARD_ASSETS: AssetSymbol[] = ['BTC/USDT', 'ETH/USDT', 'ZEC/USDT', 'PAXG/USDT', 'SOL/USDT', 'XRP/USDT', 'ADA/USDT', 'GOLD', 'NIFTY50'];
-const MEME_VOLUME_ASSETS: AssetSymbol[] = ['PEPE/USDT', 'WIF/USDT', 'DOGE/USDT', 'BONK/USDT', 'SHIB/USDT', 'FLOKI/USDT', 'SUI/USDT', 'AR/USDT', 'SOL/USDT', 'ZEC/USDT'];
+const STANDARD_ASSETS: AssetSymbol[] = ['BTC/USDT', 'ZEC/USDT'];
+const MEME_VOLUME_ASSETS: AssetSymbol[] = ['BTC/USDT', 'ZEC/USDT'];
 const TIMEFRAMES: Timeframe[] = ['1m', '5m', '15m', '1h', '4h'];
 const MARKETS: MarketType[] = ['SPOT', 'FUTURE', 'OPTION'];
 

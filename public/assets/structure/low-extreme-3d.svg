@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="lowApexL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="lowApexR" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0c4a6e" />
+    </linearGradient>
+  </defs>
+  <!-- 3D Inverted Pyramid for Structural LOW -->
+  <polygon points="32,58 10,20 32,10" fill="url(#lowApexL)" stroke="#cffafe" stroke-width="1.2" />
+  <polygon points="32,58 54,20 32,10" fill="url(#lowApexR)" stroke="#38bdf8" stroke-width="1.2" />
+  <circle cx="32" cy="58" r="3" fill="#e0f2fe" />
+  <text x="32" y="28" text-anchor="middle" fill="#090a0f" font-family="monospace" font-weight="900" font-size="10">LOW</text>
+</svg>

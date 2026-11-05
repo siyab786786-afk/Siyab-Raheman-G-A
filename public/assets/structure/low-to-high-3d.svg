@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 64" fill="none">
+  <defs>
+    <linearGradient id="lthRibbon" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  <!-- Low Node -->
+  <polygon points="16,58 6,44 16,40 26,44" fill="#38bdf8" stroke="#bae6fd" stroke-width="1" />
+  <!-- 3D Connecting Vector Ribbon Low -> High -->
+  <polygon points="18,46 24,50 62,22 56,18" fill="url(#lthRibbon)" stroke="#6ee7b7" stroke-width="0.8" />
+  <!-- High Node -->
+  <polygon points="62,6 52,20 62,24 72,20" fill="#10b981" stroke="#a7f3d0" stroke-width="1" />
+  <text x="40" y="56" text-anchor="middle" fill="#34d399" font-family="monospace" font-weight="800" font-size="8">L→H</text>
+</svg>

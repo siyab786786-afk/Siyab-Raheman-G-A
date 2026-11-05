@@ -475,6 +475,125 @@ export const SrbmprMicroOneToOnePureValidator: React.FC<{
         </div>
       </div>
 
+      {/* ====================================================================
+          VISUAL 1:10 & 1:20 PROGRESSION MAP (60 × 1-SECOND SEQUENCE MAPPING)
+      ==================================================================== */}
+      <div className="bg-gradient-to-br from-[#060b16] via-[#02050b] to-[#0b1326] border-2 border-emerald-500/50 p-6 sm:p-7 rounded-[32px] space-y-6 shadow-[0_0_90px_rgba(16,185,129,0.18)]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+          <div className="space-y-1">
+            <span className="px-2.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 w-fit">
+              <Zap className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+              MICRO-ZERO FRACTIONAL PROGRESSION MAP (1:10 & 1:20)
+            </span>
+            <h3 className="text-lg sm:text-2xl font-black text-white uppercase tracking-tight">
+              60 × 1-SECOND CANDLE SEQUENCE FRACTIONAL STRUCTURAL MAP
+            </h3>
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] text-zinc-400 font-bold uppercase block">Target Payouts ($50 Risk)</span>
+            <span className="text-xs font-black text-emerald-400 font-mono">1:10 = +$500.00 · 1:20 = +$1,000.00</span>
+          </div>
+        </div>
+
+        <p className="text-xs text-zinc-300 leading-relaxed">
+          <strong>फ्रैक्शनल स्ट्रक्चरल मैपिंग (Fractional Behavioral Mapping):</strong> 1-मिनट कैंडल के अंदर की सभी ६० अनमर्ज्ड १-सेकंड कैंडल्स (s00 से s59) को मनमाने ढंग से नहीं, बल्कि टर्मिनल ० से शुरू होने वाले विशुद्ध <strong>१:१०</strong> और <strong>१:२०</strong> विस्तार चक्रों में मैप किया गया है। प्रत्येक ब्लॉक एक निश्चित व्यवहारिक चरण (Behavioral Phase) का प्रतिनिधित्व करता है:
+        </p>
+
+        {/* 4-Stage Fractional Behavioral Architecture */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="p-3.5 bg-black/80 rounded-2xl border border-cyan-500/40 space-y-1">
+            <div className="flex justify-between items-center text-[10px] text-cyan-300 font-black uppercase">
+              <span>Phase 1: Zero Origin</span>
+              <span>s00 ➔ s11 (12s)</span>
+            </div>
+            <div className="text-sm font-black text-white">Terminal 0 Ingestion</div>
+            <p className="text-[10px] text-zinc-400">Atomic 1:1 (Δ0) establishes reference boundary. SL locked at -Zero.</p>
+          </div>
+
+          <div className="p-3.5 bg-black/80 rounded-2xl border border-teal-500/40 space-y-1">
+            <div className="flex justify-between items-center text-[10px] text-teal-300 font-black uppercase">
+              <span>Phase 2: Confirmation</span>
+              <span>s12 ➔ s23 (12s)</span>
+            </div>
+            <div className="text-sm font-black text-white">1:1 ➔ 1:3 Transition</div>
+            <p className="text-[10px] text-zinc-400">Sequential latching confirms unbroken velocity without structural break.</p>
+          </div>
+
+          <div className="p-3.5 bg-black/80 rounded-2xl border border-emerald-500/60 space-y-1 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+            <div className="flex justify-between items-center text-[10px] text-emerald-400 font-black uppercase">
+              <span>Phase 3: 1:10 Apex</span>
+              <span>s24 ➔ s41 (18s)</span>
+            </div>
+            <div className="text-sm font-black text-emerald-300">★ 1:10 Target Completion</div>
+            <p className="text-[10px] text-zinc-400">10 × Δ0 expansion completed. +$500 payout verified with 0 violations.</p>
+          </div>
+
+          <div className="p-3.5 bg-black/80 rounded-2xl border border-fuchsia-500/60 space-y-1 shadow-[0_0_20px_rgba(217,70,239,0.15)]">
+            <div className="flex justify-between items-center text-[10px] text-fuchsia-400 font-black uppercase">
+              <span>Phase 4: 1:20 Terminal</span>
+              <span>s42 ➔ s59 (18s)</span>
+            </div>
+            <div className="text-sm font-black text-fuchsia-300">★ 1:20 Macro Destination</div>
+            <p className="text-[10px] text-zinc-400">20 × Δ0 apex reached. +$1,000 payout. Container resets to next Zero.</p>
+          </div>
+        </div>
+
+        {/* 60-Cell Micro Timeline Heat Grid */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between text-[11px] text-zinc-400">
+            <span>Discrete 60-Second Timeline Grid (Hover to inspect individual second):</span>
+            <span className="text-emerald-400 font-mono font-bold">1:10 Hit: s34 · 1:20 Hit: s52</span>
+          </div>
+          <div className="grid grid-cols-10 sm:grid-cols-20 gap-1 tabular-nums">
+            {Array.from({ length: 60 }).map((_, sec) => {
+              const isT0 = sec === 4;
+              const is10 = sec === 34;
+              const is20 = sec === 52;
+              const isPhase1 = sec < 12;
+              const isPhase2 = sec >= 12 && sec < 24;
+              const isPhase3 = sec >= 24 && sec < 42;
+              const isPhase4 = sec >= 42;
+
+              return (
+                <div
+                  key={sec}
+                  className={`h-9 rounded-lg border text-center flex flex-col items-center justify-center transition-all ${
+                    isT0
+                      ? 'bg-cyan-500 text-black border-cyan-300 font-black shadow-md scale-105 z-10'
+                      : is10
+                        ? 'bg-emerald-500 text-black border-emerald-300 font-black shadow-md scale-105 z-10'
+                        : is20
+                          ? 'bg-fuchsia-500 text-black border-fuchsia-300 font-black shadow-md scale-105 z-10'
+                          : isPhase4
+                            ? 'bg-fuchsia-950/30 border-fuchsia-500/40 text-fuchsia-300'
+                            : isPhase3
+                              ? 'bg-emerald-950/30 border-emerald-500/40 text-emerald-300'
+                              : isPhase2
+                                ? 'bg-teal-950/30 border-teal-500/40 text-teal-300'
+                                : 'bg-cyan-950/30 border-cyan-500/40 text-cyan-300'
+                  }`}
+                  title={
+                    isT0
+                      ? 's04: Terminal 0 Micro-Origin'
+                      : is10
+                        ? 's34: ★ 1:10 Target Level Reached (+$500)'
+                        : is20
+                          ? 's52: ★ 1:20 Target Level Reached (+$1,000)'
+                          : `s${String(sec).padStart(2, '0')}: 1s Candle Step`
+                  }
+                >
+                  <span className="text-[8px] uppercase leading-none opacity-80">
+                    {isT0 ? 'T0' : is10 ? '1:10' : is20 ? '1:20' : `s${sec}`}
+                  </span>
+                  <span className="text-[9px] font-bold leading-none mt-0.5">
+                    {isT0 ? '0' : is10 ? '10x' : is20 ? '20x' : `${(sec % 10) + 1}r`}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
       {/* 2. THE 3 LAYERS OF 3 POSITIONS (GROUP 1, GROUP 2, GROUP 3) */}
 

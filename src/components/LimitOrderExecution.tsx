@@ -59,6 +59,15 @@ export const LimitOrderExecution: React.FC<LimitOrderExecutionProps> = ({
       return;
     }
 
+    const risk = Math.abs(price - sl);
+    const reward = Math.abs(target - price);
+    const rr = risk > 0 ? reward / risk : 0;
+
+    if (rr < 5.0) {
+      alert(`STRICT EXECUTION FILTER ACTIVE: Minimum 1:5 Risk-to-Reward ratio required for live execution. Current RR is 1:${rr.toFixed(1)}. Lower-RR levels (1:1 to 1:4) are displayed for monitoring purposes only.`);
+      return;
+    }
+
     // Force Dynamic 0.10% SL Policy Enforcement
     const { slDistance: requiredDist, sl: requiredSL } = calculateDynamicSL(price, type, asset);
     const tolerance = getDecimals(asset) === 3 ? 0.005 : 0.05;

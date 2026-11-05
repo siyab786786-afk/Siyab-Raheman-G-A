@@ -43,6 +43,15 @@ import { SrbmprFrozenInstructionBoard } from './components/SrbmprFrozenInstructi
 import { SrbmprSuperScalingGantry } from './components/SrbmprSuperScalingGantry';
 import { SrbmprMicroCompoundingAuditLedger } from './components/SrbmprMicroCompoundingAuditLedger';
 import { SrbmprMemePennyCoinsTerminal } from './components/SrbmprMemePennyCoinsTerminal';
+import { MemeCoinDiscoveryLiveScanner } from './components/MemeCoinDiscoveryLiveScanner';
+import { BybitAgentConnectGateway } from './components/BybitAgentConnectGateway';
+import { SrbmprLiveExecutionPreFlightOverlay } from './components/SrbmprLiveExecutionPreFlightOverlay';
+import { Mt5LiveAccountSwitcherPanel } from './components/Mt5LiveAccountSwitcherPanel';
+import { SrbmprGiantPnlMasterDashboard } from './components/SrbmprGiantPnlMasterDashboard';
+import { SrbmprMicrosecondBehavioralCalculator } from './components/SrbmprMicrosecondBehavioralCalculator';
+
+
+
 
 
 import { SrbmprThresholdLockRestart } from './components/SrbmprThresholdLockRestart';
@@ -51,9 +60,49 @@ import { SrbmprSequentialWaveMeasurement } from './components/SrbmprSequentialWa
 import { SrbmprNanoPrecisionSimulator } from './components/SrbmprNanoPrecisionSimulator';
 import { SrbmprTemporalPowerLedger } from './components/SrbmprTemporalPowerLedger';
 import { SrbmprAutomationCommandCenter } from './components/SrbmprAutomationCommandCenter';
-import { Shield, Bot, Terminal, Award, Zap, Target, Clock, Activity, CheckCircle2, Layers, AlertCircle, Lock, Monitor, MessageCircle, BarChart3, Ticket, FileText, ShieldAlert, Cpu, Video, ShieldCheck, Rocket, Key, Binary, Coins, Atom } from 'lucide-react';
+import { UpcomersThunderboltMasterTerminal } from './components/UpcomersThunderboltMasterTerminal';
+import { SrbmprRiskGuardOverlay } from './components/SrbmprRiskGuardOverlay';
+import { SrbmprForwardTestChelseaTerminal } from './components/SrbmprForwardTestChelseaTerminal';
+import { SrbmprForwardTestOnlyChart } from './components/SrbmprForwardTestOnlyChart';
+import { SrbmprZackLiveSequenceTerminal } from './components/SrbmprZackLiveSequenceTerminal';
+import { SrbmprOneSecondSequenceLedger } from './components/SrbmprOneSecondSequenceLedger';
+import { SrbmprViewerAuthService, ViewerUser } from './services/SrbmprViewerAuthService';
+import { SrbmprLiveAutoChartShowcase } from './components/SrbmprLiveAutoChartShowcase';
+import { SrbmprViewerAuthModal } from './components/SrbmprViewerAuthModal';
+import { SrbmprInteractiveTutorialModal } from './components/SrbmprInteractiveTutorialModal';
+import { SrbmprBrokerValidationPortalModal } from './components/SrbmprBrokerValidationPortalModal';
+import { SrbmprAdminBroadcastModal } from './components/SrbmprAdminBroadcastModal';
+import { Srbmpr100TradeTargetPanelModal } from './components/Srbmpr100TradeTargetPanelModal';
+import { SrbmprGoogleMlPluginAgentModal } from './components/SrbmprGoogleMlPluginAgentModal';
+import { SrbmprOneTimeMasterConnectionModal } from './components/SrbmprOneTimeMasterConnectionModal';
+import { SrbmprSupabaseAuditModal } from './components/SrbmprSupabaseAuditModal';
+import { SupabaseDiagnosticPanel } from './components/SupabaseDiagnosticPanel';
+import { Shield, Bot, Terminal, Award, Zap, Target, Clock, Activity, CheckCircle2, Layers, AlertCircle, Lock, Monitor, MessageCircle, BarChart3, Ticket, FileText, ShieldAlert, Cpu, Video, ShieldCheck, Rocket, Key, Binary, Coins, Atom, Tv, Sparkles, LogOut, HelpCircle, LayoutDashboard, Database } from 'lucide-react';
 
 export default function App() {
+  const authService = SrbmprViewerAuthService.getInstance();
+  const [activeViewer, setActiveViewer] = useState<ViewerUser | null>(() => authService.getCurrentUser());
+  const [interfaceMode, setInterfaceMode] = useState<'SHOWCASE' | 'FORWARD_CHART' | 'UPCOMERS' | 'QUANT_VAULT'>('FORWARD_CHART');
+  const [isMasterLive, setIsMasterLive] = useState<boolean>(true);
+
+  // New Modals
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [isTutorialModalOpen, setIsTutorialModalOpen] = useState<boolean>(false);
+  const [isBrokerPortalModalOpen, setIsBrokerPortalModalOpen] = useState<boolean>(false);
+  const [isAdminBroadcastModalOpen, setIsAdminBroadcastModalOpen] = useState<boolean>(false);
+  const [is100TargetsModalOpen, setIs100TargetsModalOpen] = useState<boolean>(false);
+  const [isGoogleMlModalOpen, setIsGoogleMlModalOpen] = useState<boolean>(false);
+  const [isOneTimeConnModalOpen, setIsOneTimeConnModalOpen] = useState<boolean>(false);
+  const [isSupabaseModalOpen, setIsSupabaseModalOpen] = useState<boolean>(false);
+  const [isSupabaseDiagnosticModalOpen, setIsSupabaseDiagnosticModalOpen] = useState<boolean>(false);
+
+  // Listen to auth changes
+  useEffect(() => {
+    return authService.subscribe(() => {
+      setActiveViewer(authService.getCurrentUser());
+    });
+  }, [authService]);
+
   const [selectedExchange, setSelectedExchange] = useState<ExchangeId>('BYBIT');
   const [marketType, setMarketType] = useState<MarketType>('SPOT');
   const [selectedAsset, setSelectedAsset] = useState<AssetSymbol>('BTC/USDT');
@@ -73,7 +122,7 @@ export default function App() {
   const [isPublishAuditModalOpen, setIsPublishAuditModalOpen] = useState(false);
   const [isLiveZoomModalOpen, setIsLiveZoomModalOpen] = useState(false);
   const [isExplainerModalOpen, setIsExplainerModalOpen] = useState(false);
-  const [isLocked, setIsLocked] = useState(false);
+  const [isLocked] = useState(false);
 
   const engine = SRBMPRMechanismEngine.getInstance();
   const [candles, setCandles] = useState<CandleData[]>([]);
@@ -136,41 +185,9 @@ export default function App() {
       window.location.reload();
     }, 600000); // 600,000ms = 10 minutes
 
-    // Security: Prevent context menu
-    const handleContextMenu = (e: MouseEvent) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // Security: Prevent Developer Tools shortcuts
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (
-        e.key === 'F12' || 
-        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-        (e.ctrlKey && e.key === 'U') ||
-        (e.ctrlKey && e.key === 'S')
-      ) {
-        e.preventDefault();
-        return false;
-      }
-    };
-    
-    // Security: Blur on focus loss
-    const handleBlur = () => setIsLocked(true);
-    const handleFocus = () => setIsLocked(false);
-
-    window.addEventListener('contextmenu', handleContextMenu);
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('blur', handleBlur);
-    window.addEventListener('focus', handleFocus);
-
     return () => {
       engine.unsubscribeFromTrades(selectedExchange, selectedAsset, handleTradeUpdate);
       clearTimeout(refreshTimer);
-      window.removeEventListener('contextmenu', handleContextMenu);
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('blur', handleBlur);
-      window.removeEventListener('focus', handleFocus);
     };
   }, [selectedExchange, selectedAsset, timeframe, structureTf, marketType]);
 
@@ -185,39 +202,172 @@ export default function App() {
   const isStale = layerState ? Math.abs(livePrice - layerState.midZone) > (livePrice * 0.05) : false;
 
   return (
-    <div className={`min-h-screen bg-black text-zinc-100 font-sans selection:bg-amber-500 selection:text-black pb-16 transition-all duration-500 ${isLocked ? 'filter blur-2xl pointer-events-none scale-105' : ''}`}>
+    <div className="min-h-screen bg-black text-zinc-100 font-sans selection:bg-amber-500 selection:text-black">
       
-      {/* Top Header Navbar */}
-      <header className="border-b border-zinc-900 bg-zinc-950/80 sticky top-0 z-40 backdrop-blur-xl">
-        <div className="max-w-[1800px] mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          
-          <div className="flex items-center gap-6">
-            <div className="w-16 h-16 rounded-[2rem] bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.3)] text-white font-black font-mono text-2xl">
-              SR
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-[0.2em] text-white uppercase italic leading-none">
-                  SRBMPR
-                </h1>
-                <span className="text-zinc-600 font-light text-2xl hidden sm:inline">|</span>
-                <span className="text-xs sm:text-sm md:text-base font-black tracking-[0.2em] text-amber-400 uppercase bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-xl shadow-[0_0_20px_rgba(245,158,11,0.2)] animate-pulse">
-                  WHO VALIDATES THE VALIDATOR
+      {/* Fixed Risk Guard Overlay mounted when not in pure distraction-free Forward Chart or Showcase mode */}
+      {engine && interfaceMode !== 'FORWARD_CHART' && interfaceMode !== 'SHOWCASE' && <SrbmprRiskGuardOverlay engine={engine} />}
+
+      {/* ====================================================================
+          MODE A: PUBLIC LIVE AUTO-CHART SHOWCASE (WATCH LIVE 30s ROTATION QUEUE)
+      ==================================================================== */}
+      {interfaceMode === 'SHOWCASE' ? (
+        <SrbmprLiveAutoChartShowcase
+          onConnectNow={() => setIsAuthModalOpen(true)}
+          onOpenTutorial={() => setIsTutorialModalOpen(true)}
+          onOpenBrokerPortal={() => setIsBrokerPortalModalOpen(true)}
+          onOpenAdminBroadcast={() => setIsAdminBroadcastModalOpen(true)}
+        />
+      ) : interfaceMode === 'FORWARD_CHART' ? (
+        /* ====================================================================
+            MODE B: ISOLATED INTERACTIVE RESEARCH TERMINAL (AUTHENTICATED VIEWER)
+        ==================================================================== */
+        <div className="flex flex-col w-screen h-screen overflow-hidden">
+          {/* SR TIME Workstation Navigation & System Telemetry Header */}
+          <div className="bg-[#050814] border-b border-amber-500/20 px-4 py-1.5 flex flex-wrap items-center justify-between gap-2.5 text-xs font-mono shrink-0">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#f59e0b]" />
+                <span className="font-black text-amber-300 uppercase tracking-wider text-sm flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-amber-400" />
+                  SR TIME — ADVANCED FORWARD TEST & LIVE TELEMETRY
                 </span>
-                <div className="flex flex-col">
-                  <span className="text-[9px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/30 font-black uppercase w-fit">
-                    Live Exchange Sync
-                  </span>
-                  <span className="text-[11px] text-zinc-300 font-black tracking-widest mt-0.5">FORENSIC SUITE</span>
-                </div>
               </div>
-              <p className="text-[10px] sm:text-[11px] text-zinc-400 font-black uppercase tracking-[0.2em] mt-2">
-                THIS PLATFORM DOES NOT SELL OR PROVIDE TRADES • FORENSIC BEHAVIORAL VALIDATION & EVIDENCE VAULT
-              </p>
+              <span className="text-zinc-600">|</span>
+              <span className="text-slate-300 hidden sm:inline">
+                Researcher: <strong className="text-amber-200">{activeViewer?.email || 'siyab786786@gmail.com'}</strong>
+              </span>
+              <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
+                AUTHENTICATED MASTER
+              </span>
+              <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-[10px] font-bold hidden md:inline">
+                FROZEN DB ║ BYBIT LIVE DUAL-LAYER
+              </span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => setIs100TargetsModalOpen(true)}
+                className="px-3 py-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 hover:from-amber-400 text-black font-black text-xs rounded-lg flex items-center gap-1.5 shadow"
+                title="100 Trades / 100 Targets (24H Engine) • High Complete Long, Low Complete Short, Cycle 0/1 Wait, Cycle 2/3 Taken"
+              >
+                <Target className="w-3.5 h-3.5 text-black" />
+                <span>100 Targets (24H)</span>
+              </button>
+
+              <button
+                onClick={() => setIsGoogleMlModalOpen(true)}
+                className="px-2.5 py-1 bg-gradient-to-r from-cyan-500/25 to-blue-500/25 hover:from-cyan-500/40 text-cyan-300 border border-cyan-400/60 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow"
+                title="Ask Google ML Plugin Agent: Unseen Minus Zero, 1:1, 1:2, 1:3 targets, and 8-candle shots"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-cyan-300 animate-pulse" />
+                <span>Ask Google ML</span>
+              </button>
+
+              <button
+                onClick={() => setIsOneTimeConnModalOpen(true)}
+                className="px-2.5 py-1 bg-[#091222] hover:bg-[#0e1d35] border border-emerald-500/50 text-emerald-300 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow"
+                title="One-Time Master Connection Hub (Database URL, Google Drive, Antigravity Bridge)"
+              >
+                <Database className="w-3.5 h-3.5 text-emerald-400" />
+                <span>1-Time Connections</span>
+              </button>
+
+              <button
+                onClick={() => setIsSupabaseModalOpen(true)}
+                className="px-2.5 py-1 bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-emerald-500/20 hover:from-emerald-500/30 text-emerald-300 border border-emerald-400/60 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow"
+                title="Supabase Central Database: kyrnctzfvmivzqejogci (Safe SQL Migrations, Real Candles, Forward Test Audit)"
+              >
+                <Database className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                <span>Supabase DB</span>
+              </button>
+
+              <button
+                onClick={() => setIsBrokerPortalModalOpen(true)}
+                className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 border border-emerald-500/40 text-emerald-300 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow"
+                title="Open Broker Evaluation, Immutable Ledger & Evidence Package (CSV/ZIP)"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Broker Validation Portal</span>
+              </button>
+
+              <button
+                onClick={() => setIsTutorialModalOpen(true)}
+                className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 border border-cyan-500/40 text-cyan-300 rounded-lg text-xs font-bold flex items-center gap-1"
+                title="Open Interactive Onboarding Tutorial"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Tutorial</span>
+              </button>
+
+              <button
+                onClick={() => setInterfaceMode('UPCOMERS')}
+                className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 border border-amber-500/40 text-amber-300 rounded-lg text-xs font-bold flex items-center gap-1"
+                title="Open Multi-Engine Quant Workspace"
+              >
+                <LayoutDashboard className="w-3.5 h-3.5 text-amber-400" />
+                <span>Quant Tools</span>
+              </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex-1 w-full h-full overflow-hidden">
+            <SrbmprForwardTestOnlyChart onOpenFullWorkspace={() => setInterfaceMode('UPCOMERS')} />
+          </div>
+        </div>
+      ) : interfaceMode === 'UPCOMERS' ? (
+        <div className="pt-10 space-y-6 pb-16">
+          <div className="px-4 sm:px-8 pt-4 flex justify-end gap-2">
+            <button
+              onClick={() => setInterfaceMode('SHOWCASE')}
+              className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-amber-500/40 text-amber-300 font-bold text-xs rounded-lg"
+            >
+              Watch Live Showcase
+            </button>
+            <button
+              onClick={() => setInterfaceMode('FORWARD_CHART')}
+              className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-lg"
+            >
+              Back to Clean Forward Test 1m Candle Chart
+            </button>
+          </div>
+          <div className="px-4 sm:px-8">
+            <SrbmprForwardTestChelseaTerminal />
+          </div>
+          <UpcomersThunderboltMasterTerminal onBackToQuantVault={() => setInterfaceMode('QUANT_VAULT')} />
+        </div>
+      ) : (
+        <>
+          {/* Top Header Navbar for Full Forensic Vault */}
+          <header className="border-b border-zinc-900 bg-zinc-950/80 sticky top-10 z-40 backdrop-blur-xl">
+            <div className="max-w-[1800px] mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+              
+              <div className="flex items-center gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.3)] text-white font-black font-mono text-xl">
+                  SR
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h1 className="text-2xl font-black tracking-[0.2em] text-white uppercase italic leading-none">
+                      SRBMPR
+                    </h1>
+                    <span className="text-zinc-600 font-light text-xl hidden sm:inline">|</span>
+                    <span className="text-xs font-black tracking-[0.2em] text-amber-400 uppercase bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-lg">
+                      WHO VALIDATES THE VALIDATOR
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-[0.15em] mt-1">
+                    FORENSIC BEHAVIORAL VALIDATION & EVIDENCE VAULT
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  onClick={() => setInterfaceMode('UPCOMERS')}
+                  className="px-3.5 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-black text-xs rounded-xl flex items-center gap-1.5 shadow-[0_0_20px_rgba(16,185,129,0.35)] uppercase tracking-wider animate-pulse"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-black" /> Upcomers Thunderbolt $10K
+                </button>
             <button
               onClick={() => {
                 const el = document.getElementById('earth-landing-terminal');
@@ -321,6 +471,13 @@ export default function App() {
               className="px-3.5 py-2 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 hover:from-emerald-500/30 hover:to-teal-500/30 text-emerald-300 rounded-2xl font-black text-[10px] flex items-center gap-1.5 border border-emerald-500/50 transition-all uppercase tracking-widest shadow-[0_0_20px_rgba(16,185,129,0.25)]"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Bybit V5 Audit Log
+            </button>
+
+            <button
+              onClick={() => setIsSupabaseDiagnosticModalOpen(true)}
+              className="px-3.5 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-300 rounded-2xl font-black text-[10px] flex items-center gap-1.5 border border-cyan-500/50 transition-all uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+            >
+              <Database className="w-3.5 h-3.5 text-cyan-400" /> Supabase Diagnostics
             </button>
 
             <button
@@ -452,6 +609,21 @@ export default function App() {
       {/* Main Workspace (100% Immersive Full-Screen Terminal Width) */}
       <main className="w-full px-4 sm:px-8 py-8 space-y-8 max-w-none">
         
+        {/* SRBMPR PURE FORWARD TEST ENGINE & CHELSEA DATA CONNECTION BREAK (LH / HL) */}
+        <SrbmprForwardTestChelseaTerminal />
+
+        {/* GIANT PNL & 20-SEQUENCE MASTER DASHBOARD (FOCUSED BIG VIEW) */}
+        <SrbmprGiantPnlMasterDashboard 
+          selectedAsset={selectedAsset} 
+          livePrice={livePrice} 
+        />
+
+        {/* BTC MICROSECOND BEHAVIORAL & NET COST CALCULATOR */}
+        <SrbmprMicrosecondBehavioralCalculator 
+          selectedAsset={selectedAsset} 
+          livePrice={livePrice} 
+        />
+
         {/* Asset Selector & Fast Switcher Box */}
         <MultiAssetSelectorBox
           selectedExchange={selectedExchange}
@@ -546,6 +718,16 @@ export default function App() {
           selectedAsset={selectedAsset}
           livePrice={livePrice}
         />
+
+        {/* SRBMPR ONE-SECOND SEQUENCE LEDGER (60 INTERVALS PER MINUTE MAPPING 1:1, 1:2, 1:3) */}
+        <div id="one-second-sequence-ledger">
+          <SrbmprOneSecondSequenceLedger />
+        </div>
+
+        {/* SRBMPR ZACK LIVE SEQUENCE & 1-SECOND PIPELINE TERMINAL */}
+        <div id="zack-live-sequence-terminal">
+          <SrbmprZackLiveSequenceTerminal />
+        </div>
 
         {/* SR TIME — EARTH LANDING FINAL TARGET TERMINAL (3 ROCKET STAGES & 5-MIN VALIDITY) */}
         <div id="earth-landing-terminal">
@@ -692,6 +874,9 @@ export default function App() {
                   {/* BYBIT DEMO ACTUAL EXECUTION & 1:1 PROOF AUDIT MATCH PANEL */}
                   {selectedExchange === 'BYBIT' && (
                     <>
+                      <Mt5LiveAccountSwitcherPanel />
+                      <SrbmprLiveExecutionPreFlightOverlay />
+                      <BybitAgentConnectGateway />
                       <BybitDemoExecutionPanel />
                       <SrbmprAutomationCommandCenter />
                       <SrbmprBoxStepOscillator />
@@ -699,6 +884,7 @@ export default function App() {
                       <SrbmprSuperScalingGantry selectedAsset={selectedAsset} livePrice={livePrice} />
                       <SrbmprMicroCompoundingAuditLedger selectedAsset={selectedAsset} />
                       <SrbmprMemePennyCoinsTerminal />
+                      <MemeCoinDiscoveryLiveScanner />
                       <SrbmprThresholdLockRestart />
                       <BybitExecutionAuditLog currentAsset={selectedAsset} lastLivePrice={livePrice} />
                       <SrbmprSequentialWaveMeasurement currentLivePrice={livePrice} />
@@ -862,7 +1048,72 @@ export default function App() {
         isOpen={isExplainerModalOpen}
         onClose={() => setIsExplainerModalOpen(false)}
       />
+        </>
+      )}
 
+      {/* Global Onboarding, Authentication, Broker Evaluation & Admin Broadcast Modals */}
+      <SrbmprViewerAuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={(user) => {
+          setActiveViewer(user);
+          setInterfaceMode('FORWARD_CHART');
+        }}
+        onOpenTutorial={() => setIsTutorialModalOpen(true)}
+      />
+
+      <SrbmprInteractiveTutorialModal
+        isOpen={isTutorialModalOpen}
+        onClose={() => setIsTutorialModalOpen(false)}
+        onOpenConnectModal={() => setIsAuthModalOpen(true)}
+      />
+
+      <SrbmprBrokerValidationPortalModal
+        isOpen={isBrokerPortalModalOpen}
+        onClose={() => setIsBrokerPortalModalOpen(false)}
+      />
+
+      <SrbmprAdminBroadcastModal
+        isOpen={isAdminBroadcastModalOpen}
+        onClose={() => setIsAdminBroadcastModalOpen(false)}
+        currentUser={activeViewer}
+        isMasterLive={isMasterLive}
+        onToggleMasterLive={setIsMasterLive}
+      />
+
+      <Srbmpr100TradeTargetPanelModal
+        isOpen={is100TargetsModalOpen}
+        onClose={() => setIs100TargetsModalOpen(false)}
+        activeSymbol={selectedAsset}
+        activeTimeframe={timeframe}
+        livePrice={livePrice}
+      />
+
+      <SrbmprGoogleMlPluginAgentModal
+        isOpen={isGoogleMlModalOpen}
+        onClose={() => setIsGoogleMlModalOpen(false)}
+        activeSymbol={selectedAsset}
+        livePrice={livePrice}
+        timeframe={timeframe}
+      />
+
+      <SrbmprOneTimeMasterConnectionModal
+        isOpen={isOneTimeConnModalOpen}
+        onClose={() => setIsOneTimeConnModalOpen(false)}
+      />
+
+      <SrbmprSupabaseAuditModal
+        isOpen={isSupabaseModalOpen}
+        onClose={() => setIsSupabaseModalOpen(false)}
+        activeSymbol={selectedAsset}
+        activeTimeframe={timeframe}
+      />
+
+      {isSupabaseDiagnosticModalOpen && (
+        <div className="fixed inset-0 z-[160] flex items-center justify-center bg-black/85 backdrop-blur-md p-4">
+          <SupabaseDiagnosticPanel onClose={() => setIsSupabaseDiagnosticModalOpen(false)} />
+        </div>
+      )}
     </div>
   );
 }

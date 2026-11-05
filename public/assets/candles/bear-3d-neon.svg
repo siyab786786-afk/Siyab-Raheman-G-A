@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 96" fill="none">
+  <defs>
+    <linearGradient id="bearFront" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb7185" />
+      <stop offset="50%" stop-color="#f43f5e" />
+      <stop offset="100%" stop-color="#be123c" />
+    </linearGradient>
+    <linearGradient id="bearSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#881337" />
+    </linearGradient>
+    <linearGradient id="bearTop" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fecdd3" />
+      <stop offset="100%" stop-color="#fb7185" />
+    </linearGradient>
+  </defs>
+  <!-- Upper Wick -->
+  <line x1="30" y1="6" x2="30" y2="24" stroke="#fda4af" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Lower Wick -->
+  <line x1="30" y1="72" x2="30" y2="90" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round" />
+  <!-- 3D Top Bevel Face -->
+  <polygon points="16,24 24,18 48,18 40,24" fill="url(#bearTop)" stroke="#fecdd3" stroke-width="0.75" />
+  <!-- 3D Front Body -->
+  <rect x="16" y="24" width="24" height="48" fill="url(#bearFront)" stroke="#fda4af" stroke-width="1" />
+  <!-- 3D Right Depth Face -->
+  <polygon points="40,24 48,18 48,66 40,72" fill="url(#bearSide)" stroke="#fb7185" stroke-width="0.75" />
+  <!-- Specular Edge Highlight -->
+  <line x1="17" y1="24" x2="17" y2="71" stroke="#ffe4e6" stroke-width="1" stroke-opacity="0.8" />
+</svg>
